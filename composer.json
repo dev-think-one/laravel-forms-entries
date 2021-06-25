@@ -1,6 +1,6 @@
 {
     "name": "yaroslawww/laravel-forms-entries",
-    "description": "Package to save forms entries and send notifications",
+    "description": "Package to save forms entries and send notifications.",
     "keywords": [
         "forms",
         "laravel-forms-entries"
