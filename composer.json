@@ -1,0 +1,57 @@
+{
+    "name": "yaroslawww/laravel-forms-entries",
+    "description": "Package to save forms entries and send notifications",
+    "keywords": [
+        "forms",
+        "laravel-forms-entries"
+    ],
+    "homepage": "https://github.com/yaroslawww/laravel-forms-entries",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yaroslav Georgitsa",
+            "email": "yaroslav.georgitsa@gmail.com",
+            "homepage": "https://github.com/yaroslawww",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "orchestra/testbench": "^6.18",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-laravel": "^1.4",
+        "vimeo/psalm": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "FormEntries\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FormEntries\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FormEntries\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
