@@ -6,7 +6,6 @@ use FormEntries\CastsData\FormEntryContentCastable;
 use FormEntries\CastsData\FormEntryMetaCastable;
 use Illuminate\Database\Eloquent\Model;
 
-
 class FormEntry extends Model
 {
     protected $guarded = [];
