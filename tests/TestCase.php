@@ -2,6 +2,7 @@
 
 namespace FormEntries\Tests;
 
+use FormEntries\Facades\FormEntryManager;
 use FormEntries\Tests\Fixtures\Http\Controllers\TestPublicFormController;
 use FormEntries\Tests\Fixtures\Http\Controllers\TraceRequestController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -34,6 +35,7 @@ abstract class TestCase extends OrchestraTestCase
     {
         $router->get('testing/trace-request', TraceRequestController::class);
         $router->post('testing/public-form', TestPublicFormController::class);
+        FormEntryManager::routes();
     }
 
     /**

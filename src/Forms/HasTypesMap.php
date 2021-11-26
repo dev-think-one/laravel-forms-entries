@@ -32,14 +32,14 @@ trait HasTypesMap
         return static::class;
     }
 
-    public static function getClassByType(string $slug): ?string
+    public static function getClassByType(?string $type = null): ?string
     {
         $slugsMap = static::typesMap();
 
-        if (!empty($slugsMap[$slug])) {
-            return $slugsMap[$slug];
+        if (!empty($slugsMap[$type])) {
+            return $slugsMap[$type];
         }
 
-        return class_exists($slug) ? $slug : null;
+        return class_exists($type) ? $type : null;
     }
 }

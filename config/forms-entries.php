@@ -6,6 +6,11 @@ return [
         'forms-entries' => env('FORMS_ENTRIES_TABLE', 'forms_entries'),
     ],
 
+    'routing' => [
+        'path'                => env('FORMS_ENTRIES_ROUTE_PATH', 'forms-entries'),
+        'form_name_parameter' => env('FORMS_ENTRIES_FORM_NAME_PARAMETER', 'form-type'),
+    ],
+
     'defaults' => [
         'auth_guard'             => null,
         'should_store'           => env('FORMS_ENTRIES_SHOULD_STORE', true),
