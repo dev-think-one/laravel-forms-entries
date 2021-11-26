@@ -8,32 +8,31 @@ use Illuminate\Http\Request;
 
 class PendingForm implements FormManipulationContract
 {
-    protected AbstractForm $form;
+    protected Form $form;
 
-    protected bool $isNeedNotification;
+    protected bool $shouldNotify;
 
-    protected bool $isNeedSaving;
+    protected bool $shouldStore;
 
     /**
      * PendingForm constructor.
      *
      * @param $form
      */
-    public function __construct(AbstractForm $form)
+    public function __construct(Form $form)
     {
         $this->form = $form;
 
-        $this->isNeedNotification = config('forms-entries.defaults.is_need_notification', true);
-        $this->isNeedSaving       = config('forms-entries.defaults.is_need_saving', true);
+        $this->shouldStore  = (bool) config('forms-entries.defaults.should_store');
+        $this->shouldNotify = (bool) config('forms-entries.defaults.should_notify');
     }
-
 
     /**
      * @inheritDoc
      */
-    public function withSaving($isNeedSaving = true): self
+    public function enableStoringData(bool $shouldStore = true): static
     {
-        $this->isNeedSaving = $isNeedSaving;
+        $this->shouldStore = $shouldStore;
 
         return $this;
     }
@@ -41,9 +40,24 @@ class PendingForm implements FormManipulationContract
     /**
      * @inheritDoc
      */
-    public function withOutSaving(): self
+    public function disableStoringData(): static
     {
-        $this->isNeedSaving = false;
+        $this->shouldStore = false;
+
+        return $this;
+    }
+
+    public function isShouldStore(): bool
+    {
+        return $this->shouldStore;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function enableNotifications(bool $shouldNotify = true): static
+    {
+        $this->shouldNotify = $shouldNotify;
 
         return $this;
     }
@@ -51,50 +65,27 @@ class PendingForm implements FormManipulationContract
     /**
      * @inheritDoc
      */
-    public function withNotification($isNeedNotification = true): self
+    public function disableNotifications(): static
     {
-        $this->isNeedNotification = $isNeedNotification;
+        $this->shouldNotify = false;
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function withoutNotification(): self
+    public function isShouldNotify(): bool
     {
-        $this->isNeedNotification = false;
+        return $this->shouldNotify;
+    }
+
+    public function setNotifiableUsers(array|\Closure $notifiableUsers): static
+    {
+        $this->form->setNotifiableUsers($notifiableUsers);
 
         return $this;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return FormEntry
-     */
     public function process(Request $request): FormEntry
     {
         return $this->form->process($request, $this);
-    }
-
-    /**
-     * Check is current form data must be stored in the storage.
-     *
-     * @return bool
-     */
-    public function isNeedSaving(): bool
-    {
-        return $this->isNeedSaving;
-    }
-
-    /**
-     * Check is current form data must be sent.
-     *
-     * @return bool
-     */
-    public function isNeedNotification(): bool
-    {
-        return $this->isNeedNotification;
     }
 }

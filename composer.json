@@ -16,19 +16,21 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "ext-json": "*"
+        "php": ">=8.0",
+        "ext-json": "*",
+        "yaroslawww/laravel-json-field-cast": "^1.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "orchestra/testbench": "^6.18",
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "orchestra/testbench": "^6.23",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-laravel": "^1.4",
-        "vimeo/psalm": "^4.8"
+        "psalm/plugin-laravel": "^1.5",
+        "vimeo/psalm": "^4.13"
     },
     "autoload": {
         "psr-4": {
-            "FormEntries\\": "src"
+            "FormEntries\\": "src",
+            "FormEntries\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {

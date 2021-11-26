@@ -11,11 +11,11 @@ class MigrationHelper
     {
         $table->id();
         $table->string('type', 50)->default('default')->index();
-        $table->dateTime('is_notified')->nullable();
-        $table->string('class_name')->nullable();
-        $table->longText('content')->nullable();
-        $table->morphs('sender');
-        $table->mediumText('meta')->nullable();
+        $table->string('content_type')->nullable()->index();
+        $table->json('content')->nullable();
+        $table->dateTime('notified_at')->nullable()->index();
+        $table->nullableMorphs('sender');
+        $table->json('meta')->nullable();
         $table->timestamps();
     }
 }

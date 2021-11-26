@@ -1,14 +1,23 @@
 <?php
 
 return [
+
     'tables' => [
-        'forms-entries' => 'forms-entries',
+        'forms-entries' => env('FORMS_ENTRIES_TABLE', 'forms_entries'),
     ],
 
     'defaults' => [
-        'is_need_saving'       => env('FORMS_ENTRIES_NEED_SAVING_TO_STORAGE', true),
-        'is_need_notification' => env('FORMS_ENTRIES_NEED_NOTIFICATIONS', true),
-        'content_class'        => env('FORMS_ENTRIES_CONTENT_CLASS', \FormEntries\CastsData\JsonData\FormEntryContentJson::class),
-        'storage_model_class'  => env('FORMS_ENTRIES_STORAGE_MODEL_CLASS', \FormEntries\Models\FormEntry::class),
+        'auth_guard'             => null,
+        'should_store'           => env('FORMS_ENTRIES_SHOULD_STORE', true),
+        'should_notify'          => env('FORMS_ENTRIES_SHOULD_NOTIFY', true),
+        'content_class'          => env('FORMS_ENTRIES_CONTENT_CLASS', \FormEntries\Forms\UniversalFormContent::class),
+        'storage_model_class'    => env('FORMS_ENTRIES_STORAGE_MODEL_CLASS', \FormEntries\Models\FormEntry::class),
+        'notification_class'     => env('FORMS_ENTRIES_NOTIFICATION_CLASS', \FormEntries\Notifications\FormEntryReceived::class),
+        'notification_receivers' => [
+            'email' => [
+                // 'email@test.com' => 'Test User',
+            ],
+        ],
     ],
+
 ];

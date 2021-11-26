@@ -1,6 +1,12 @@
 # Laravel Forms Entries
 
-Package to save forms entries and send notifications
+[![Packagist License](https://img.shields.io/packagist/l/yaroslawww/laravel-forms-entries?color=%234dc71f)](https://github.com/yaroslawww/laravel-forms-entries/blob/master/LICENSE.md)
+[![Packagist Version](https://img.shields.io/packagist/v/yaroslawww/laravel-forms-entries)](https://packagist.org/packages/yaroslawww/laravel-forms-entries)
+[![Build Status](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/build.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=master)
+
+Package to save forms entries (like contact us forms ...) and send notifications
 
 ## Installation
 
@@ -16,46 +22,55 @@ You can publish the config file with:
 php artisan vendor:publish --provider="FormEntries\ServiceProvider" --tag="config"
 ```
 
-## Usage
+To disable default migrations add this code to app service provider:
 
 ```injectablephp
+\FormEntries\FormEntryManager::ignoreMigrations()
+```
 
-class ContactUsForm extends \FormEntries\Forms\AbstractForm
+## Usage
+
+### Use predefined classes
+
+```injectablephp
+$formEntry = UniversalForm::make()
+                ->enableStoringData()
+                ->enableNotifications()
+                ->process($request);
+```
+
+### Use custom form and content
+
+```injectablephp
+class ContactUsFormContent extends FormContent
 {
+    protected array $requestKeysToSave = ['email', 'message'];
 
-    public function notify(FormEntry $model): bool
-    {
-       
-        $users = User::whereIn('email', [
-            'my.user@email.uk',
-            'other.user@email.uk',
-        ])->get();
-        if ($users->count()) {
-            /** @var User $user */
-            foreach ($users as $user) {
-                $user->notify(new ContactUsRequestReceived($model->content));
-            }
-        }
-        
-        Notification::route('mail', [
-            'direct@example.uk' => 'Support',
-        ])->notify(new ContactUsRequestReceived($model->content));
-
-        return true;
-    }
-
-    public function validate(Request $request): self
+    public function validateRequest(Request $request): static
     {
         $request->validate([
-            'subject' => [ 'required', 'string', 'max:200' ],
-            'message' => [ 'required', 'string', 'max:3000' ],
+            'email'   => ['required', 'email'],
+            'message' => ['required', 'min:10', 'max:500'],
         ]);
 
         return $this;
     }
 }
+```
 
-$entry = ContactUsForm::make()->process($request);
+```injectablephp
+class ContactUsForm extends Form
+{
+    protected string $formContentClass = ContactUsFormContent::class;
+
+    public function notify(FormEntry $model): bool
+    {
+        Notification::route('mail', 'tester@test.admin')
+                    ->notify(new ($this->getFormNotificationClass())($model->content));
+
+        return true;
+    }
+}
 ```
 
 ## Credits

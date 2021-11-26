@@ -13,11 +13,26 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
             $this->commands([
             ]);
+
+            $this->registerMigrations();
         }
     }
 
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/forms-entries.php', 'forms-entries');
+    }
+
+
+    /**
+     * Register the package migrations.
+     *
+     * @return void
+     */
+    protected function registerMigrations()
+    {
+        if (FormEntryManager::$runsMigrations) {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
     }
 }

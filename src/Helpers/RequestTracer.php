@@ -16,7 +16,11 @@ class RequestTracer
         $data = static::getRequestSimpleMetaInfo($request);
 
 
-        if (($user = $request->user()) && $user instanceof Model) {
+        if (
+            ($user = $request->user(
+                config('forms-entries.defaults.auth_guard', config('auth.defaults.guard'))
+            ))
+            && $user instanceof Model) {
             $data['creator'] = [
                 'id'   => $user->getKey(),
                 'type' => $user->getMorphClass(),

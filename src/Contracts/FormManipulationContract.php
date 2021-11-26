@@ -2,39 +2,39 @@
 
 namespace FormEntries\Contracts;
 
+use FormEntries\Forms\PendingForm;
+
 interface FormManipulationContract
 {
-
     /**
      * Form data must be stored in the storage.
      *
-     * @param bool $isNeedSaving
+     * @param bool $shouldStore
      *
-     * @return self
+     * @return PendingForm
      */
-    public function withSaving($isNeedSaving = true): self;
+    public function enableStoringData(bool $shouldStore = true): PendingForm;
 
     /**
      * Form data does not need to be stored in storage.
      *
-     * @return self
+     * @return PendingForm
      */
-    public function withOutSaving(): self;
-
+    public function disableStoringData(): PendingForm;
 
     /**
      * Form data must be sent via notifications.
      *
-     * @param bool $isNeedNotification
+     * @param bool $shouldNotify
      *
-     * @return self
+     * @return PendingForm
      */
-    public function withNotification($isNeedNotification = true): self;
+    public function enableNotifications(bool $shouldNotify = true): PendingForm;
 
     /**
      * Form data does not need to be sent via notifications.
      *
-     * @return self
+     * @return PendingForm
      */
-    public function withoutNotification(): self;
+    public function disableNotifications(): PendingForm;
 }
