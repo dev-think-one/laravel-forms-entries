@@ -46,7 +46,7 @@ class FormEntryReceived extends Notification implements ShouldQueue
         /** @var MailMessage $message */
         $message = (new MailMessage)
             ->subject($this->getSubject())
-            ->line('Form content');
+            ->line(trans('forms-entries::notification.form_content_header'));
         foreach (explode("\n", $this->content->stringify()) as $line) {
             $message->line($line);
         }
@@ -61,6 +61,6 @@ class FormEntryReceived extends Notification implements ShouldQueue
         }
         $formName = Str::title(Str::snake(Str::beforeLast(class_basename(get_class($this->content)), 'FormContent'), ' '));
 
-        return "{$formName} form received";
+        return trans('forms-entries::notification.form_subject', ['name' => $formName]);
     }
 }

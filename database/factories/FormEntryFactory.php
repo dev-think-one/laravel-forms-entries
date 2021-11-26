@@ -3,7 +3,6 @@
 namespace FormEntries\Database\Factories;
 
 use Carbon\Carbon;
-use FormEntries\Forms\Form;
 use FormEntries\Forms\FormContent;
 use FormEntries\Models\FormEntry;
 use Illuminate\Database\Eloquent\Factories\Factory;

@@ -16,10 +16,11 @@ Install the package via composer:
 composer require yaroslawww/laravel-forms-entries
 ```
 
-You can publish the config file with:
+You can publish the assets file with:
 
 ```bash
 php artisan vendor:publish --provider="FormEntries\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="FormEntries\ServiceProvider" --tag="lang"
 ```
 
 To disable default migrations add this code to app service provider:

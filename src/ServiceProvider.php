@@ -11,11 +11,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 __DIR__ . '/../config/forms-entries.php' => config_path('forms-entries.php'),
             ], 'config');
 
+            $this->publishes([
+                __DIR__.'/../resources/lang' => resource_path('lang/vendor/forms-entries'),
+            ], 'lang');
+
             $this->commands([
             ]);
 
             $this->registerMigrations();
         }
+
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'forms-entries');
     }
 
     public function register()
