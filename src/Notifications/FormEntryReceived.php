@@ -46,6 +46,7 @@ class FormEntryReceived extends Notification implements ShouldQueue
         /** @var MailMessage $message */
         $message = (new MailMessage)
             ->subject($this->getSubject())
+            ->greeting(trans('forms-entries::notification.form_content_greeting'))
             ->line(trans('forms-entries::notification.form_content_header'));
         foreach (explode("\n", $this->content->stringify()) as $line) {
             $message->line($line);
