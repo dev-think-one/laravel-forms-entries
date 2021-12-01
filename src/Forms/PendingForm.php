@@ -84,6 +84,13 @@ class PendingForm implements FormManipulationContract
         return $this;
     }
 
+    public function setNotifiableEmails(array|\Closure $notifiableEmails): static
+    {
+        $this->form->setNotifiableEmails($notifiableEmails);
+
+        return $this;
+    }
+
     public function process(Request $request): FormEntry
     {
         return $this->form->process($request, $this);

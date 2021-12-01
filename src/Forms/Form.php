@@ -14,7 +14,8 @@ abstract class Form implements FormManipulationContract
 {
     use HasTypesMap;
 
-    public array|\Closure $notifiableUsers = [];
+    public array|\Closure $notifiableUsers  = [];
+    public array|\Closure $notifiableEmails = [];
 
     public static function make(...$arguments): PendingForm
     {
@@ -62,6 +63,22 @@ abstract class Form implements FormManipulationContract
         return $this->notifiableUsers;
     }
 
+    public function setNotifiableEmails(array|\Closure $notifiableEmails): static
+    {
+        $this->notifiableEmails = $notifiableEmails;
+
+        return $this;
+    }
+
+    protected function notifiableEmails(FormEntry $model): array
+    {
+        if (is_callable($this->notifiableEmails)) {
+            return call_user_func($this->notifiableEmails, $model);
+        }
+
+        return $this->notifiableEmails;
+    }
+
     public function notify(FormEntry $model): bool
     {
         $notificationSent = false;
@@ -73,7 +90,10 @@ abstract class Form implements FormManipulationContract
             $notificationSent = true;
         }
 
-        $emailReceivers = config('forms-entries.defaults.notification_receivers.email');
+        $emailReceivers = array_merge(
+            config('forms-entries.defaults.notification_receivers.email', []),
+            $this->notifiableEmails($model)
+        );
         if (is_array($emailReceivers) && !empty($emailReceivers)) {
             \Illuminate\Support\Facades\Notification::route('mail', $emailReceivers)
                                                     ->notify($notification);

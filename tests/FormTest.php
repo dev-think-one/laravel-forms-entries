@@ -138,9 +138,9 @@ class FormTest extends TestCase
 
         $pendingForm = UniversalForm::make()
                                     ->enableStoringData()
-                                    ->enableNotifications();
-        $pendingForm->setNotifiableUsers([$user2, $user]);
-        $formEntry = $pendingForm->process($request);
+                                    ->enableNotifications()
+                                    ->setNotifiableUsers([$user2, $user]);
+        $formEntry   = $pendingForm->process($request);
 
         $this->assertInstanceOf(FormEntry::class, $formEntry);
 
@@ -196,6 +196,79 @@ class FormTest extends TestCase
                 $this->assertEquals('My foo bar subject', $notification->toMail($user)->subject);
 
                 return $notification->content->isEmpty();
+            }
+        );
+    }
+
+    /** @test */
+    public function form_out_of_the_box_with_notification_to_emails()
+    {
+        /** @var Request $request */
+        $request = $this->mock(Request::class, function (MockInterface $mock) {
+            $mock->shouldReceive('all')->andReturn([]);
+            $mock->shouldReceive('user')->andReturn(null)->twice();
+            $mock->shouldReceive('ip')->andReturn('127.3.0.1');
+            $mock->shouldReceive('ips')->andReturn(['127.3.0.1']);
+            $mock->shouldReceive('userAgent')->andReturn('form_out_of_the_box_with_notification_to_emails');
+        });
+
+        $pendingForm = UniversalForm::make()
+                                    ->enableStoringData()
+                                    ->enableNotifications()
+                                    ->setNotifiableEmails([
+                                        'email@foo.test' => 'Foo',
+                                        'email@bar.test' => 'Bar',
+                                    ]);
+        $formEntry   = $pendingForm->process($request);
+
+        $this->assertInstanceOf(FormEntry::class, $formEntry);
+
+        $this->assertNotNull($formEntry->notified_at);
+        $this->assertEquals('127.3.0.1', $formEntry->meta->getAttribute('request_data.ip'));
+        $this->assertEquals(__FUNCTION__, $formEntry->meta->getAttribute('request_data.userAgent'));
+        $this->assertEquals(UniversalFormContent::class, $formEntry->content_type);
+        $this->assertInstanceOf(UniversalFormContent::class, $formEntry->content);
+        $this->assertTrue($formEntry->content->isEmpty());
+
+        Notification::assertSentTo(
+            new AnonymousNotifiable,
+            FormEntryReceived::class,
+            function ($notification, $channels, $notifiable) {
+                return array_key_exists('email@foo.test', $notifiable->routes['mail'])
+                       && array_key_exists('email@bar.test', $notifiable->routes['mail']);
+            }
+        );
+    }
+
+    /** @test */
+    public function form_out_of_the_box_with_notification_to_emails_as_callback()
+    {
+        /** @var Request $request */
+        $request = $this->mock(Request::class, function (MockInterface $mock) {
+            $mock->shouldReceive('all')->andReturn([]);
+            $mock->shouldReceive('user')->andReturn(null)->twice();
+            $mock->shouldReceive('ip')->andReturn('127.3.0.1');
+            $mock->shouldReceive('ips')->andReturn(['127.3.0.1']);
+            $mock->shouldReceive('userAgent')->andReturn('form_out_of_the_box_with_notification_to_emails_as_callback');
+        });
+
+        $formEntry = UniversalForm::make()
+                                  ->disableStoringData()
+                                  ->enableNotifications()
+                                  ->setNotifiableEmails(fn () => [
+                                      'email@foo.test' => 'Foo',
+                                      'email@bar.test' => 'Bar',
+                                  ])
+                                  ->process($request);
+
+        $this->assertNull($formEntry->notified_at);
+        $this->assertFalse($formEntry->exists);
+        Notification::assertSentTo(
+            new AnonymousNotifiable,
+            FormEntryReceived::class,
+            function ($notification, $channels, $notifiable) {
+                return array_key_exists('email@foo.test', $notifiable->routes['mail'])
+                       && array_key_exists('email@bar.test', $notifiable->routes['mail']);
             }
         );
     }
