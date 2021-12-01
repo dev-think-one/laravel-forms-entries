@@ -28,6 +28,7 @@ class SendFormEntryController
         }
 
         abort(404);
+
         return null;
     }
 }

@@ -42,11 +42,11 @@ abstract class FormContent extends AbstractMeta
     public function stringify(): string
     {
         $string = '';
-        foreach ($this->requestKeysToSave() as $key) {
+        foreach ($this->data as $key => $value) {
             $string .= sprintf(
                 $this->stringifyLineFormat(),
                 $key,
-                $this->getAttribute($key, '- Empty- ')
+                $value ?: 'Empty'
             );
         }
 
