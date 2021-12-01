@@ -21,7 +21,7 @@ trait HasTypesMap
         return static::$typesMap;
     }
 
-    public function getType(): string
+    public static function getType(): string
     {
         $typesMap = static::typesMap();
 

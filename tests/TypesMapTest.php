@@ -19,7 +19,7 @@ class TypesMapTest extends TestCase
         $this->assertEquals(UniversalForm::class, Form::getClassByType('uni'));
 
         $form = new UniversalForm();
-        $this->assertEquals('uni', $form->getType());
+        $this->assertEquals('uni', $form::getType());
     }
 
     /** @test */
@@ -31,6 +31,6 @@ class TypesMapTest extends TestCase
         $this->assertNull(Form::getClassByType('uni'));
 
         $form = new UniversalForm();
-        $this->assertEquals(UniversalForm::class, $form->getType());
+        $this->assertEquals(UniversalForm::class, $form::getType());
     }
 }

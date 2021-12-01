@@ -59,7 +59,7 @@ class FormEntryFactory extends Factory
     public function usingContent(FormContent $formContent): static
     {
         return $this->state([
-            'content_type' => $formContent->getType(),
+            'content_type' => $formContent::getType(),
             'content'      => $formContent->toArray(),
         ]);
     }

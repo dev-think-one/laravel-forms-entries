@@ -98,8 +98,8 @@ abstract class Form implements FormManipulationContract
         }
 
         $model->fill([
-            'type'         => $this->getType(),
-            'content_type' => $formContent->getType(),
+            'type'         => $this::getType(),
+            'content_type' => $formContent::getType(),
             'content'      => $formContent->toArray(),
         ]);
         $model->meta->setData(['request_data' => RequestTracer::getRequestMetaInfo($request),]);

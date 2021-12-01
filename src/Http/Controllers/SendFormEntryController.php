@@ -27,6 +27,7 @@ class SendFormEntryController
             return redirect()->back()->with('success', trans('forms-entries::messages.form_sent'));
         }
 
-        return abort(404);
+        abort(404);
+        return null;
     }
 }

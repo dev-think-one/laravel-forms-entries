@@ -29,7 +29,7 @@ To disable default migrations add this code to app service provider:
 \FormEntries\FormEntryManager::ignoreMigrations()
 ```
 
-Ypu can add default routes to your `web.php`
+You can add default routes to your `web.php`
 
 ```injectablephp
 FormEntryManager::routes();
