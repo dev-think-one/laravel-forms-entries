@@ -4,6 +4,7 @@ namespace FormEntries\Forms;
 
 use FormEntries\Models\FormEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use JsonFieldCast\Json\AbstractMeta;
 
 abstract class FormContent extends AbstractMeta
@@ -37,6 +38,19 @@ abstract class FormContent extends AbstractMeta
     public function requestKeysToSave(): array
     {
         return $this->requestKeysToSave;
+    }
+
+    public function formName(): string
+    {
+        return Str::title(
+            Str::snake(
+                Str::beforeLast(
+                    class_basename(static::class),
+                    'FormContent'
+                ),
+                ' '
+            )
+        );
     }
 
     public function stringify(): string

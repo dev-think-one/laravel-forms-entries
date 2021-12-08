@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Str;
 
 class FormEntryReceived extends Notification implements ShouldQueue
 {
@@ -60,8 +59,7 @@ class FormEntryReceived extends Notification implements ShouldQueue
         if ($this->subject) {
             return $this->subject;
         }
-        $formName = Str::title(Str::snake(Str::beforeLast(class_basename(get_class($this->content)), 'FormContent'), ' '));
 
-        return trans('forms-entries::notification.form_subject', ['name' => $formName]);
+        return trans('forms-entries::notification.form_subject', ['name' => $this->content->formName()]);
     }
 }
