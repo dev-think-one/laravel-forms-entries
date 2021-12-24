@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Response;
 
 class SendFormEntryController
 {
-    public function __invoke(Request $request): mixed
+    public function __invoke(Request $request)
     {
         $formClass = Form::getClassByType($request->input(config('forms-entries.routing.form_name_parameter')));
         if (is_a($formClass, Form::class, true)) {
@@ -28,7 +28,5 @@ class SendFormEntryController
         }
 
         abort(404);
-
-        return null;
     }
 }

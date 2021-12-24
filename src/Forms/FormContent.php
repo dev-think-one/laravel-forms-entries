@@ -4,6 +4,7 @@ namespace FormEntries\Forms;
 
 use FormEntries\Models\FormEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use JsonFieldCast\Json\AbstractMeta;
 
@@ -59,8 +60,8 @@ abstract class FormContent extends AbstractMeta
         foreach ($this->data as $key => $value) {
             $string .= sprintf(
                 $this->stringifyLineFormat(),
-                $key,
-                $value ?: 'Empty'
+                $this->humanReadableKey((string) $key),
+                $value ?: trans('forms-entries::messages.empty_value')
             );
         }
 
@@ -78,5 +79,23 @@ abstract class FormContent extends AbstractMeta
         // $request->validate([]);
 
         return $this;
+    }
+
+    protected function humanReadableKey(string $key): string
+    {
+        $formID = static::class;
+        foreach (
+            [
+                "forms-entry-keys.{$formID}.{$key}",
+                "forms-entry-keys.{$key}",
+                "forms-entries::keys.{$key}",
+            ] as $path
+        ) {
+            if (Lang::has($path)) {
+                return (string) Lang::get($path);
+            }
+        }
+
+        return Str::ucfirst(Str::snake(Str::camel($key), ' '));
     }
 }
