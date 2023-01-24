@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RequestTracer
 {
-    public static function getRequestMetaInfo(Request $request = null): array
+    public static function getRequestMetaInfo(?Request $request = null): array
     {
         if (!$request) {
             $request = request();
@@ -30,7 +30,7 @@ class RequestTracer
         return $data;
     }
 
-    public static function getRequestSimpleMetaInfo(Request $request = null): array
+    public static function getRequestSimpleMetaInfo(?Request $request = null): array
     {
         if (!$request) {
             $request = request();
