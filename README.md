@@ -27,7 +27,17 @@ php artisan vendor:publish --provider="FormEntries\ServiceProvider" --tag="lang"
 To disable default migrations add this code to app service provider:
 
 ```injectablephp
+use FormEntries\Forms\Form;
+use FormEntries\Forms\FormContent;
+
 \FormEntries\FormEntryManager::ignoreMigrations()
+
+Form::typesMap([
+    'form-contact' => ContactUsForm::class,
+]);
+FormContent::typesMap([
+    'contact-us' => ContactUsFormContent::class,
+]);
 ```
 
 You can add default routes to your `web.php`
@@ -40,6 +50,8 @@ FormEntryManager::routes();
 
 ### Use predefined classes
 
+In case you do not need custom classes with validation.
+
 ```injectablephp
 $formEntry = UniversalForm::make()
                 ->enableStoringData()
@@ -50,6 +62,8 @@ $formEntry = UniversalForm::make()
 ### Use custom form and content
 
 ```injectablephp
+// /app/Http/FormEntries/FormContent/ContactUsFormContent.php
+
 class ContactUsFormContent extends FormContent
 {
     protected array $requestKeysToSave = ['email', 'message'];
@@ -67,6 +81,8 @@ class ContactUsFormContent extends FormContent
 ```
 
 ```injectablephp
+// /app/Http/FormEntries/Forms/ContactUsForm.php
+
 class ContactUsForm extends Form
 {
     protected string $formContentClass = ContactUsFormContent::class;
@@ -79,6 +95,19 @@ class ContactUsForm extends Form
         return true;
     }
 }
+```
+
+```html
+<form action="{{route('forms-entries.submit')}}"
+      method="post"
+>
+    @csrf
+    <input type="hidden"
+           name="{{config('forms-entries.routing.form_name_parameter')}}"
+           value="{{\App\Http\FormEntries\Forms\FolioMetricsForm::getType()}}">
+    Other fields
+    <button type="submit">Submit</button>
+</form>
 ```
 
 ## Credits
