@@ -1,11 +1,11 @@
 # Laravel Forms Entries
 
-[![Packagist License](https://img.shields.io/packagist/l/yaroslawww/laravel-forms-entries?color=%234dc71f)](https://github.com/yaroslawww/laravel-forms-entries/blob/master/LICENSE.md)
+[![Packagist License](https://img.shields.io/packagist/l/yaroslawww/laravel-forms-entries?color=%234dc71f)](https://github.com/yaroslawww/laravel-forms-entries/blob/main/LICENSE.md)
 [![Packagist Version](https://img.shields.io/packagist/v/yaroslawww/laravel-forms-entries)](https://packagist.org/packages/yaroslawww/laravel-forms-entries)
 [![Total Downloads](https://img.shields.io/packagist/dt/yaroslawww/laravel-forms-entries)](https://packagist.org/packages/yaroslawww/laravel-forms-entries)
-[![Build Status](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/build.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/build-status/master)
-[![Code Coverage](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/build.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/build-status/main)
+[![Code Coverage](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=main)
 
 Package to save forms entries (like contact us forms ...) and send notifications
 

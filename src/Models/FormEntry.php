@@ -31,7 +31,7 @@ class FormEntry extends Model
     /**
      * @inheritDoc
      */
-    public function getTable()
+    public function getTable(): string
     {
         return $this->table ?? config('forms-entries.tables.forms-entries', parent::getTable());
     }
