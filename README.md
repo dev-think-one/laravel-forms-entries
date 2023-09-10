@@ -1,11 +1,11 @@
 # Laravel Forms Entries
 
-[![Packagist License](https://img.shields.io/packagist/l/yaroslawww/laravel-forms-entries?color=%234dc71f)](https://github.com/yaroslawww/laravel-forms-entries/blob/main/LICENSE.md)
-[![Packagist Version](https://img.shields.io/packagist/v/yaroslawww/laravel-forms-entries)](https://packagist.org/packages/yaroslawww/laravel-forms-entries)
-[![Total Downloads](https://img.shields.io/packagist/dt/yaroslawww/laravel-forms-entries)](https://packagist.org/packages/yaroslawww/laravel-forms-entries)
-[![Build Status](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/build.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/build-status/main)
-[![Code Coverage](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=main)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/yaroslawww/laravel-forms-entries/?branch=main)
+![Packagist License](https://img.shields.io/packagist/l/think.studio/laravel-forms-entries?color=%234dc71f)
+[![Packagist Version](https://img.shields.io/packagist/v/think.studio/laravel-forms-entries)](https://packagist.org/packages/think.studio/laravel-forms-entries)
+[![Total Downloads](https://img.shields.io/packagist/dt/think.studio/laravel-forms-entries)](https://packagist.org/packages/think.studio/laravel-forms-entries)
+[![Build Status](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/badges/build.png?b=main)](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/build-status/main)
+[![Code Coverage](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/dev-think-one/laravel-forms-entries/?branch=main)
 
 Package to save forms entries (like contact us forms ...) and send notifications
 
@@ -14,7 +14,7 @@ Package to save forms entries (like contact us forms ...) and send notifications
 Install the package via composer:
 
 ```bash
-composer require yaroslawww/laravel-forms-entries
+composer require think.studio/laravel-forms-entries
 ```
 
 You can publish the assets file with:
@@ -42,8 +42,8 @@ FormContent::typesMap([
 
 You can add default routes to your `web.php`
 
-```injectablephp
-FormEntryManager::routes();
+```php
+\FormEntries\Facades\FormEntryManager::routes();
 ```
 
 ## Usage
@@ -52,8 +52,8 @@ FormEntryManager::routes();
 
 In case you do not need custom classes with validation.
 
-```injectablephp
-$formEntry = UniversalForm::make()
+```php
+$formEntry = \FormEntries\Forms\UniversalForm::make()
                 ->enableStoringData()
                 ->enableNotifications()
                 ->process($request);
@@ -61,9 +61,8 @@ $formEntry = UniversalForm::make()
 
 ### Use custom form and content
 
-```injectablephp
+```php
 // /app/Http/FormEntries/FormContent/ContactUsFormContent.php
-
 class ContactUsFormContent extends FormContent
 {
     protected array $requestKeysToSave = ['email', 'message'];
@@ -80,9 +79,8 @@ class ContactUsFormContent extends FormContent
 }
 ```
 
-```injectablephp
+```php
 // /app/Http/FormEntries/Forms/ContactUsForm.php
-
 class ContactUsForm extends Form
 {
     protected string $formContentClass = ContactUsFormContent::class;

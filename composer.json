@@ -1,16 +1,16 @@
 {
-    "name": "yaroslawww/laravel-forms-entries",
+    "name": "think.studio/laravel-forms-entries",
     "description": "Package to save forms entries and send notifications.",
     "keywords": [
         "forms",
         "laravel-forms-entries"
     ],
-    "homepage": "https://github.com/yaroslawww/laravel-forms-entries",
+    "homepage": "https://github.com/dev-think-one/laravel-forms-entries",
     "license": "MIT",
     "authors": [
         {
             "name": "Yaroslav Georgitsa",
-            "email": "yaroslav.georgitsa@gmail.com",
+            "email": "yg@think.studio",
             "homepage": "https://github.com/yaroslawww",
             "role": "Developer"
         }
