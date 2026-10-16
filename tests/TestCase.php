@@ -26,11 +26,6 @@ abstract class TestCase extends OrchestraTestCase
         ];
     }
 
-    protected function defineDatabaseMigrations()
-    {
-        $this->loadLaravelMigrations();
-    }
-
     protected function defineWebRoutes($router)
     {
         $router->get('testing/trace-request', TraceRequestController::class);
@@ -53,6 +48,10 @@ abstract class TestCase extends OrchestraTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        // Register laravel migrations (users table) so RefreshDatabase runs them,
+        // testbench 9+ executes "migrate:fresh" what drops tables created via loadLaravelMigrations().
+        $app->afterResolving('migrator', fn ($migrator) => $migrator->path($app->basePath('migrations')));
 
         // $app['config']->set('forms-entries.some_key', 'some_value');
     }

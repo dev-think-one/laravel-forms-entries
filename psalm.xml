@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <psalm
     errorLevel="7"
+    ensureOverrideAttribute="false"
     findUnusedVariablesAndParams="true"
     resolveFromConfigFile="true"
     useDocblockPropertyTypes="true"
@@ -16,6 +17,11 @@
     </projectFiles>
 
     <issueHandlers>
+        <MissingTemplateParam>
+            <errorLevel type="suppress">
+                <directory name="vendor"/>
+            </errorLevel>
+        </MissingTemplateParam>
     </issueHandlers>
 
     <plugins>

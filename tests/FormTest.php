@@ -10,7 +10,6 @@ use FormEntries\Notifications\FormEntryReceived;
 use FormEntries\Tests\Fixtures\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
@@ -187,8 +186,7 @@ class FormTest extends TestCase
         $this->assertFalse($formEntry->exists);
         Notification::assertSentTo(
             [$user],
-            function (FormEntryReceived $notification, $channels) use ($formEntry, $user) {
-                /** @var MailMessage $mailMessage */
+            function (FormEntryReceived $notification) use ($user) {
                 $mailMessage = $notification->toMail($user);
                 $this->assertTrue(Str::startsWith($mailMessage->subject, 'Universal '));
 
