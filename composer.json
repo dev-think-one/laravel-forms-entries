@@ -18,15 +18,15 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
-        "laravel/framework": "^9.0|^10.0",
+        "laravel/framework": "^9.0|^10.0|^11.0|^12.0",
         "think.studio/laravel-json-field-cast": "^2.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.20",
-        "orchestra/testbench": "^8.5",
-        "phpunit/phpunit": "^10.2",
-        "psalm/plugin-laravel": "^2.8",
-        "vimeo/psalm": "^5.13"
+        "orchestra/testbench": "^8.5|^9.0|^10.0",
+        "phpunit/phpunit": "^10.2|^11.0",
+        "psalm/plugin-laravel": "^2.8|^3.0",
+        "vimeo/psalm": "^5.13|^6.0"
     },
     "autoload": {
         "psr-4": {
